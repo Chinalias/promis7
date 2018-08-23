@@ -9,7 +9,7 @@ const fetchVideoInfo = require('youtube-info');
 const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4";
 const prefix = '1';
 client.on('ready', function() {
-    client.user.setGame(`Type 1play `,"http://twitch.tv/Baktash_183")
+    client.user.setGame(` !help - skoza Music`,"http://twitch.tv/Baktash_183")
     console.log(`i am ready ${client.user.username}`);
 });
 /*
@@ -218,6 +218,7 @@ function add_to_queue(strID) {
 function search_video(query, cb) {
     request("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + yt_api_key, function(error, response, body) {
         var json = JSON.parse(body);
+        cb(json.items[0].id.videoId);
     });
 }
  
@@ -256,29 +257,35 @@ client.on('message', message => {
     });
  
  
+const adminprefix = "!";
+const devs = ['331081268731052042'];
 client.on('message', message => {
-var prefix = "1";
- 
-  if (!message.content.startsWith(prefix)) return;
-  var args = message.content.split(' ').slice(1);
-  var argresult = args.join(' ');
-  if (message.author.id == '331081268731052042' ) return;
- 
-if (message.content.startsWith(prefix + 'stream')) {
-  client.user.setGame(argresult, "https://www.twitch.tv/baktash_183");
-    message.channel.sendMessage(`**${argresult}** :تم تغيير الحالة الى ستريمنج`)
+  var argresult = message.content.split(` `).slice(1).join(' ');
+    if (!devs.includes(message.author.id)) return;
+    
+if (message.content.startsWith(adminprefix + 'setgame')) {
+  client.user.setGame(argresult);
+    message.channel.sendMessage(`**${argresult} تم تغيير بلاينق البوت إلى **`)
+} else 
+  if (message.content.startsWith(adminprefix + 'setname')) {
+client.user.setUsername(argresult).then
+    message.channel.sendMessage(`**${argresult}** : تم تغيير أسم البوت إلى`)
+return message.reply("**لا يمكنك تغيير الاسم يجب عليك الانتظآر لمدة ساعتين . **");
 } else
- 
-if (message.content.startsWith(prefix + 'name')) {
-  client.user.setUsername(argresult).then
-      message.channel.sendMessage(`**${argresult}** : تم تغير الأسم`)
-  return message.reply("**لا تستطيع تغير الأسم الا بعد ساعتين**");
-} else
- 
-if (message.content.startsWith(prefix + 'img')) {
-  client.user.setAvatar(argresult);
-    message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
+  if (message.content.startsWith(adminprefix + 'setavatar')) {
+client.user.setAvatar(argresult);
+  message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
+      } else     
+if (message.content.startsWith(adminprefix + 'setT')) {
+  client.user.setGame(argresult, "https://www.twitch.tv/idk");
+    message.channel.sendMessage(`**تم تغيير تويتش البوت إلى  ${argresult}**`)
 }
+
 });
- 
+
+
 client.login(process.env.BOT_TOKEN);
+
+
+ 
+
