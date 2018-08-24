@@ -7,9 +7,9 @@ const getYoutubeID = require('get-youtube-id');
 const fetchVideoInfo = require('youtube-info');
  
 const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4";
-const prefix = 'Type 7play';
+const prefix = '7';
 client.on('ready', function() {
-    client.user.setGame(` !help - skoza Music`,"http://twitch.tv/Baktash_183")
+    client.user.setGame(` Type 7play `,"http://twitch.tv/Baktash_183")
     console.log(`i am ready ${client.user.username}`);
 });
 /*
